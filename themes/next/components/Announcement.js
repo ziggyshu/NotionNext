@@ -15,7 +15,7 @@ const Announcement = ({ post, className }) => {
             </div>
         </div>
         {post && (<div id="announcement-content">
-            <NotionPage post={post} className='text-left leading-1 text-xs font-light' />
+            <NotionPage post={post} className='text-left font-light' style={{ fontSize: '0.75rem', lineHeight: '0.8rem' }} />
         </div>)}
     </>
 }
