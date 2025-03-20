@@ -1,167 +1,138 @@
-import Comment from '@/components/Comment'
-import LazyImage from '@/components/LazyImage'
 import NotionIcon from '@/components/NotionIcon'
 import NotionPage from '@/components/NotionPage'
-import ShareBar from '@/components/ShareBar'
-import WWAds from '@/components/WWAds'
+import TwikooCommentCount from '@/components/TwikooCommentCount'
 import { siteConfig } from '@/lib/config'
 import { useGlobal } from '@/lib/global'
 import { formatDateFmt } from '@/lib/utils/formatDate'
+import Image from 'next/image'
 import Link from 'next/link'
-import { useRouter } from 'next/router'
 import CONFIG from '../config'
-import ArticleCopyright from './ArticleCopyright'
-import BlogAround from './BlogAround'
-import RecommendPosts from './RecommendPosts'
-import TagItem from './TagItem'
-import WordCount from '@/components/WordCount'
+import Card from './Card'
+import TagItemMini from './TagItemMini'
 
-/**
- *
- * @param {*} param0
- * @returns
- */
-export default function ArticleDetail(props) {
-  const { post, recommendPosts, prev, next } = props
-  const url = siteConfig('LINK') + useRouter().asPath
+const BlogPostCard = ({ post, index, showSummary }) => {
   const { locale } = useGlobal()
-  const showArticleInfo = siteConfig('NEXT_ARTICLE_INFO', null, CONFIG)
+  const showPreview =
+    siteConfig('NEXT_POST_LIST_PREVIEW', null, CONFIG) && post.blockMap
   // 动画样式  首屏卡片不用，后面翻出来的加动画
-  const aosProps = {
-    'data-aos': 'fade-down',
-    'data-aos-duration': '400',
-    'data-aos-once': 'true',
-    'data-aos-anchor-placement': 'top-bottom'
-  }
+  const aosProps =
+    index > 2
+      ? {
+          'data-aos': 'fade-down',
+          'data-aos-duration': '400',
+          'data-aos-once': 'true',
+          'data-aos-anchor-placement': 'top-bottom'
+        }
+      : {}
 
   return (
-    <div className='shadow md:hover:shadow-2xl overflow-x-auto flex-grow mx-auto w-screen md:w-full'>
+    <Card className='w-full mb-3'>
       <div
-        itemScope
-        itemType='https://schema.org/Movie'
-        className='overflow-y-hidden py-10 px-4 lg:pt-24 md:px-24 dark:border-gray-700 bg-white dark:bg-hexo-black-gray'>
-        {showArticleInfo && (
-          <header {...aosProps}>
-            {/* 头图 */}
-            {siteConfig('NEXT_POST_HEADER_IMAGE_VISIBLE', null, CONFIG) &&
-              post?.type &&
-              post?.type !== 'Page' &&
-              post?.pageCover && (
-                <div className='w-full relative md:flex-shrink-0 overflow-hidden h-64 lg:h-80'>
-                  <LazyImage
-                    alt={post.title}
-                    src={post?.pageCover}
-                    className='object-cover w-full h-full object-center'
-                  />
-                </div>
-              )}
-
-            {/* title */}
-            <div className='text-center font-bold text-3.5xl text-black dark:text-white font-sans pt-6'>
-              {siteConfig('POST_TITLE_ICON') && (
-                <NotionIcon icon={post.pageIcon} />
-              )}
-              {post.title}
-            </div>
-
-            {/* meta */}
-            <section className='mt-2 text-gray-500 dark:text-gray-400 font-light leading-7 text-sm'>
-              <div className='flex flex-wrap justify-center'>
-                {post?.type !== 'Page' && (
-                  <>
-                    <Link
-                      href={`/archive#${formatDateFmt(post?.publishDate, 'yyyy-MM')}`}
-                      passHref
-                      legacyBehavior>
-                      <div className='pl-1 mr-2 cursor-pointer hover:text-gray-700 dark:hover:text-gray-200 border-b dark:border-gray-500 border-dashed'>
-                        <i className='far fa-calendar mr-1' />{' '}
-                        {post?.publishDay}
-                      </div>
-                    </Link>
-                    <span className='mr-2'>
-                      {' '}
-                      | <i className='far fa-calendar-check mr-2' />
-                      {post.lastEditedDay}{' '}
-                    </span>
-
-                    <div className='hidden busuanzi_container_page_pv font-light mr-2'>
-                      <i className='mr-1 fas fa-eye' />
-                      <span className='mr-2 busuanzi_value_page_pv' />
-                    </div>
-                  </>
-                )}
+        key={post.id}
+        className='flex flex-row justify-between duration-300'>
+        {/* 封面图 - 左侧 */}
+        {siteConfig('NEXT_POST_LIST_COVER', null, CONFIG) &&
+          post?.pageCoverThumbnail && (
+            <Link href={post?.href} passHref legacyBehavior>
+              <div className='w-1/3 h-40 relative duration-200 cursor-pointer transform overflow-hidden'>
+                <Image
+                  className='hover:scale-105 transform duration-500'
+                  src={post?.pageCoverThumbnail}
+                  alt={post.title}
+                  layout='fill'
+                  objectFit='cover'
+                  loading='lazy'
+                />
               </div>
+            </Link>
+          )}
 
-              <WordCount wordCount={post.wordCount} readTime={post.readTime} />
-            </section>
-          </header>
-        )}
+        {/* 内容 - 右侧 */}
+        <div className='flex-1 lg:p-6 p-3 flex flex-col'>
+          {/* 文章标题 */}
+          <Link
+            {...aosProps}
+            href={post?.href}
+            passHref
+            className={`cursor-pointer text-2xl ${showPreview ? 'text-center' : ''} leading-tight text-gray-700 dark:text-gray-100 hover:text-blue-500 dark:hover:text-blue-400`}>
+            {siteConfig('POST_TITLE_ICON') && (
+              <NotionIcon icon={post.pageIcon} />
+            )}{' '}
+            <span className='menu-link'>{post.title}</span>
+          </Link>
 
-        {/* Notion内容主体 */}
-        <article id='article-wrapper' className='mx-auto'>
-          <WWAds className='w-full' orientation='horizontal' />
-          {post && <NotionPage post={post} />}
-          <WWAds className='w-full' orientation='horizontal' />
-        </article>
-
-        {showArticleInfo && (
-          <>
-            {/* 分享 */}
-            <ShareBar post={post} />
-
-            {/* 版权声明 */}
-            {post?.type === 'Post' && (
-              <ArticleCopyright author={siteConfig('AUTHOR')} url={url} />
-            )}
-
-            {/* 推荐文章 */}
-            {post?.type === 'Post' && (
-              <RecommendPosts
-                currentPost={post}
-                recommendPosts={recommendPosts}
-              />
-            )}
-
-            <section className='flex justify-between'>
-              {/* 分类 */}
+          <div
+            {...aosProps}
+            className={`flex mt-1 items-center ${showPreview ? 'justify-center' : 'justify-start'} flex-wrap dark:text-gray-500 text-gray-500`}>
+            <div>
               {post.category && (
                 <>
-                  <div className='cursor-pointer my-auto text-md mr-2 hover:text-black dark:hover:text-white border-b dark:text-gray-500 border-dashed'>
-                    <Link href={`/category/${post.category}`} legacyBehavior>
-                      <a>
-                        <i className='mr-1 far fa-folder-open' />{' '}
-                        {post.category}
-                      </a>
-                    </Link>
-                  </div>
+                  <Link
+                    href={`/category/${post.category}`}
+                    passHref
+                    className='hover:text-blue-500 dark:hover:text-blue-400 cursor-pointer font-light text-xs transform'>
+                    <i className='mr-1 fas fa-folder' />
+                    <span className='menu-link'>{post.category}</span>
+                  </Link>
+                  <span className='mx-1'>|</span>
                 </>
               )}
+              <Link
+                href={`/archive#${formatDateFmt(post?.publishDate, 'yyyy-MM')}`}
+                passHref
+                className='hover:text-blue-500 dark:hover:text-blue-400 font-light cursor-pointer text-xs leading-4 mr-2'>
+                <span className='menu-link'>{post.date?.start_date}</span>
+              </Link>
+            </div>
 
-              {/* 标签列表 */}
-              {post?.type === 'Post' && (
-                <>
-                  {post.tagItems && (
-                    <div className='flex items-center flex-nowrap leading-8 p-1 py-4 overflow-x-auto'>
-                      <div className='hidden md:block dark:text-gray-300 whitespace-nowrap'>
-                        {locale.COMMON.TAGS}: 
-                      </div>
-                      {post.tagItems.map(tag => (
-                        <TagItem key={tag.name} tag={tag} />
-                      ))}
-                    </div>
-                  )}
-                </>
-              )}
-            </section>
-            {post?.type === 'Post' && <BlogAround prev={prev} next={next} />}
-          </>
-        )}
+            <TwikooCommentCount
+              post={post}
+              className='hover:text-blue-500 dark:hover:text-blue-400 hover:underline text-xs'
+            />
 
-        {/* 评论互动 */}
-        <div className='duration-200 w-full dark:border-gray-700 bg-white dark:bg-hexo-black-gray'>
-          <Comment frontMatter={post} />
+            <div className='hover:text-blue-500 dark:hover:text-blue-400 md:flex-nowrap flex-wrap md:justify-start inline-block'>
+              {post.tagItems?.map(tag => (
+                <TagItemMini key={tag.name} tag={tag} />
+              ))}
+            </div>
+          </div>
+
+          {(!showPreview || showSummary) && !post.results && (
+            <p
+              {...aosProps}
+              className='mt-4 mb-12 text-gray-700 dark:text-gray-300 text-sm font-light leading-7'>
+              {post.summary}
+            </p>
+          )}
+
+          {/* 搜索结果 */}
+          {post.results && (
+            <p className='line-clamp-4 mt-4 text-gray-700 dark:text-gray-300 text-sm font-light leading-7'>
+              {post.results.map((r, index) => (
+                <span key={index}>{r}</span>
+              ))}
+            </p>
+          )}
+
+          {showPreview && post?.blockMap && (
+            <div className='overflow-ellipsis truncate'>
+              <NotionPage post={post} />
+            </div>
+          )}
+
+          {/* 按钮部分 - 缩小 */}
+          <div className='text-right border-t pt-4 border-dashed'>
+            <Link
+              href={post?.href}
+              className='hover:bg-opacity-100 hover:underline transform duration-300 px-2 py-1 text-sm text-white bg-gray-800 cursor-pointer'>
+              {locale.COMMON.ARTICLE_DETAIL}
+              <i className='ml-1 fas fa-angle-right text-sm' />
+            </Link>
+          </div>
         </div>
       </div>
-    </div>
+    </Card>
   )
 }
+
+export default BlogPostCard
