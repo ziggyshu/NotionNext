@@ -35,29 +35,29 @@ export default function ArticleDetail(props) {
   }
 
   return (
-    <div className='shadow md:hover:shadow-2xl overflow-x-auto flex-grow mx-auto w-screen md:w-full '>
+    <div className='shadow md:hover:shadow-2xl overflow-x-auto flex-grow mx-auto w-screen md:w-full'>
       <div
         itemScope
         itemType='https://schema.org/Movie'
-        className='overflow-y-hidden py-10 px-4 lg:pt-24 md:px-24  dark:border-gray-700 bg-white dark:bg-hexo-black-gray'>
+        className='overflow-y-hidden py-10 px-4 lg:pt-24 md:px-24 dark:border-gray-700 bg-white dark:bg-hexo-black-gray'>
         {showArticleInfo && (
           <header {...aosProps}>
             {/* 头图 */}
             {siteConfig('NEXT_POST_HEADER_IMAGE_VISIBLE', null, CONFIG) &&
               post?.type &&
-              !post?.type !== 'Page' &&
+              post?.type !== 'Page' &&
               post?.pageCover && (
-                <div className='w-full relative md:flex-shrink-0 overflow-hidden'>
+                <div className='w-full relative md:flex-shrink-0 overflow-hidden h-64 lg:h-80'>
                   <LazyImage
                     alt={post.title}
                     src={post?.pageCover}
-                    className='object-center w-full'
+                    className='object-cover w-full h-full object-center'
                   />
                 </div>
               )}
 
             {/* title */}
-            <div className=' text-center font-bold text-3xl text-black dark:text-white font-serif pt-6'>
+            <div className='text-center font-bold text-3xl text-black dark:text-white font-serif pt-6'>
               {siteConfig('POST_TITLE_ICON') && (
                 <NotionIcon icon={post.pageIcon} />
               )}
@@ -143,7 +143,7 @@ export default function ArticleDetail(props) {
                   {post.tagItems && (
                     <div className='flex items-center flex-nowrap leading-8 p-1 py-4 overflow-x-auto'>
                       <div className='hidden md:block dark:text-gray-300 whitespace-nowrap'>
-                        {locale.COMMON.TAGS}:&nbsp;
+                        {locale.COMMON.TAGS}: 
                       </div>
                       {post.tagItems.map(tag => (
                         <TagItem key={tag.name} tag={tag} />
