@@ -25,7 +25,7 @@ const Logo = props => {
           data-aos-delay='300'
           data-aos-once='true'
           data-aos-anchor-placement='top-bottom'
-          className='text-sm text-gray-300 font-sans text-center'>
+          className='text-sm text-gray-300 font-serif text-center'>
           {' '}
           {siteConfig('DESCRIPTION')}
         </div>
