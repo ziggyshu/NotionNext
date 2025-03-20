@@ -99,8 +99,45 @@ const SocialButton = () => {
             <i className='fab fa-youtube transform hover:scale-125 duration-150' />
           </a>
         )}
+        {siteConfig('CONTACT_RESEARCHGATE') && (
+          <a
+            target='_blank'
+            rel='noreferrer'
+            title={'ResearchGate'}
+            href={siteConfig('CONTACT_RESEARCHGATE')}>
+            <i className='fab fa-researchgate transform hover:scale-125 duration-150' />
+          </a>
+        )}
+        {siteConfig('CONTACT_ORCID') && (
+          <a
+            target='_blank'
+            rel='noreferrer'
+            title={'ORCID'}
+            href={siteConfig('CONTACT_ORCID')}>
+            <i className='fab fa-orcid transform hover:scale-125 duration-150' />
+          </a>
+        )}
+        {siteConfig('CONTACT_GOOGLE_SCHOLAR') && (
+          <a
+            target='_blank'
+            rel='noreferrer'
+            title={'Google Scholar'}
+            href={siteConfig('CONTACT_GOOGLE_SCHOLAR')}>
+            <i className='fab fa-google transform hover:scale-125 duration-150' />
+          </a>
+        )}
+        {siteConfig('CONTACT_SCOPUS') && (
+          <a
+            target='_blank'
+            rel='noreferrer'
+            title={'Scopus'}
+            href={siteConfig('CONTACT_SCOPUS')}>
+            <i className='fas fa-database transform hover:scale-125 duration-150' />
+          </a>
+        )}
       </div>
     </div>
   )
 }
+
 export default SocialButton
