@@ -102,10 +102,10 @@ const BlogPostCard = ({ post, index, showSummary }) => {
             </div>
           )}
 
-          <div className='text-right border-t pt-8 border-dashed mb-'>
+          <div className='text-right border-t pt-8 border-dashed'>
             <Link
               href={post?.href}
-              className='hover:bg-opacity-100 hover:underline transform duration-300 p-2 text-white bg-gray-800 cursor-pointer'>
+              className='hover:bg-opacity-100 hover:underline transform duration-300 p-3 text-white bg-gray-800 cursor-pointer'>
               {locale.COMMON.ARTICLE_DETAIL}
               <i className='ml-1 fas fa-angle-right' />
             </Link>
@@ -115,7 +115,7 @@ const BlogPostCard = ({ post, index, showSummary }) => {
         {siteConfig('NEXT_POST_LIST_COVER', null, CONFIG) &&
           post?.pageCoverThumbnail && (
             <Link href={post?.href} passHref legacyBehavior>
-              <div className='h-50 w-full relative duration-200 cursor-pointer transform overflow-hidden'>
+              <div className='h-72 w-full relative duration-200 cursor-pointer transform overflow-hidden'>
                 <Image
                   className='hover:scale-105 transform duration-500'
                   src={post?.pageCoverThumbnail}
