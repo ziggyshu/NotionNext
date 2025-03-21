@@ -102,7 +102,7 @@ const BlogPostCard = ({ post, index, showSummary }) => {
             </div>
           )}
 
-          <div className='text-right border-t pt-8 border-dashed'>
+          <div className='text-right border-t pt-4 border-dashed'>
             <Link
               href={post?.href}
               className='hover:bg-opacity-100 hover:underline transform duration-300 p-2 text-white bg-gray-800 cursor-pointer'>
