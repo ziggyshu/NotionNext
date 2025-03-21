@@ -67,7 +67,7 @@ const SocialButton = () => {
           <a
             target='_blank'
             rel='noreferrer'
-            title={'email'}
+            title={'Email'}
             href={`mailto:${siteConfig('CONTACT_EMAIL')}`}>
             <i className='fas fa-envelope transform hover:scale-125 duration-150' />
           </a>
@@ -123,7 +123,7 @@ const SocialButton = () => {
             rel='noreferrer'
             title={'Google Scholar'}
             href={siteConfig('CONTACT_GOOGLE_SCHOLAR')}>
-            <i className='fab fa-google transform hover:scale-125 duration-150' />
+            <i className='fab fa-google-scholar transform hover:scale-125 duration-150' />
           </a>
         )}
         {siteConfig('CONTACT_SCOPUS') && (
