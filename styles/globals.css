@@ -2,6 +2,10 @@
 @tailwind components;
 @tailwind utilities;
 
+#article-wrapper p {
+  text-align: justify;
+}
+
 html {
   overflow-x: hidden;
 }
