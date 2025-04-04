@@ -7,7 +7,7 @@ const Logo = props => {
     <Link href='/' passHref legacyBehavior>
       <div
         className={
-          'flex flex-col justify-center items-center cursor-pointer bg-[#384151] space-y-3 font-bold ' +
+          'flex flex-col justify-center items-center cursor-pointer bg-[#000000] space-y-3 font-bold ' +
           className
         }>
         <div
