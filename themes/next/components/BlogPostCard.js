@@ -82,14 +82,16 @@ const BlogPostCard = ({ post, index, showSummary }) => {
           {(!showPreview || showSummary) && !post.results && (
             <p
               {...aosProps}
-              className='mt-4 mb-12 text-gray-700 dark:text-gray-300 text-sm font-light leading-7'>
+              // Adjusted margin-bottom since the "Read More" link is removed
+              className='mt-4 mb-4 text-gray-700 dark:text-gray-300 text-sm font-light leading-7'>
               {post.summary}
             </p>
           )}
 
           {/* 搜索结果 */}
           {post.results && (
-            <p className='line-clamp-4 mt-4 text-gray-700 dark:text-gray-300 text-sm font-light leading-7'>
+            // Adjusted margin-bottom
+            <p className='line-clamp-4 mt-4 mb-4 text-gray-700 dark:text-gray-300 text-sm font-light leading-7'>
               {post.results.map((r, index) => (
                 <span key={index}>{r}</span>
               ))}
@@ -97,11 +99,14 @@ const BlogPostCard = ({ post, index, showSummary }) => {
           )}
 
           {showPreview && post?.blockMap && (
-            <div className='overflow-ellipsis truncate'>
+            // Adjusted margin-bottom if needed, depending on desired spacing
+            <div className='overflow-ellipsis truncate mb-4'>
               <NotionPage post={post} />
             </div>
           )}
 
+          {/* --- REMOVED SECTION START --- */}
+          {/*
           <div className='text-right border-t pt-8 border-dashed'>
             <Link
               href={post?.href}
@@ -110,6 +115,9 @@ const BlogPostCard = ({ post, index, showSummary }) => {
               <i className='ml-1 fas fa-angle-right' />
             </Link>
           </div>
+          */}
+          {/* --- REMOVED SECTION END --- */}
+
         </div>
 
         {siteConfig('NEXT_POST_LIST_COVER', null, CONFIG) &&
