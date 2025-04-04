@@ -30,7 +30,7 @@ const BlogPostCard = ({ post, index, showSummary }) => {
       <div
         key={post.id}
         className='flex flex-col-reverse justify-between duration-300'>
-        <div className='lg:p-8 p-4 flex flex-col w-full'>
+        <div className='lg:p-4 p-2 flex flex-col w-full'>
           {/* 文章标题 */}
           <Link
             {...aosProps}
