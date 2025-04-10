@@ -57,7 +57,7 @@ export default function ArticleDetail(props) {
               )}
 
             {/* title */}
-            <div className=' text-center font-bold text-3xl text-black dark:text-white font-serif pt-6'>
+            <div className=' text-center font-light font-bold text-2xl text-black dark:text-white pt-6'>
               {siteConfig('POST_TITLE_ICON') && (
                 <NotionIcon icon={post.pageIcon} />
               )}
@@ -65,7 +65,7 @@ export default function ArticleDetail(props) {
             </div>
 
             {/* meta */}
-            <section className='mt-2 text-gray-500 dark:text-gray-400 font-light leading-7 text-sm'>
+            <section className='mt-2 text-gray-500 dark:text-gray-400 text-left font-light leading-7 text-sm'>
               <div className='flex flex-wrap justify-center'>
                 {post?.type !== 'Page' && (
                   <>
